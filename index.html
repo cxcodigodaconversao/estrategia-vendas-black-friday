@@ -1,27 +1,45 @@
-<script>
-  const player = new Plyr('#player', {
-    controls: [
-      'play', 'progress', 'current-time', 'mute', 'volume', 'settings', 'fullscreen'
-    ],
-    // Velocidade (isso aparece no menu de "settings")
-    speed: {
-      selected: 1,
-      options: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]
-    },
-    // Legendas (se tiver track)
-    captions: { active: false, update: true, language: 'pt' },
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Aula</title>
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+  <style>
+    html,body{height:100%;margin:0;background:#fff}
+    .wrap{max-width:1000px;margin:0 auto;padding:12px}
+    .player{aspect-ratio:16/9;border-radius:12px;overflow:hidden;box-shadow:0 8px 25px rgba(0,0,0,.12)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="player">
+      <!-- ID do vídeo YouTube -->
+      <div id="player" data-plyr-provider="youtube" data-plyr-embed-id="DiPIPaFY4A0"></div>
+    </div>
+  </div>
 
-    // YouTube
-    youtube: {
-      noCookie: true,
-      modestbranding: 1,
-      rel: 0,
-      iv_load_policy: 3,
-      playsinline: 1,
-      hl: 'pt-BR'
-    },
-
-    // Qualidade: YouTube não suporta via Plyr (deixa claro)
-    quality: { enabled: false }
-  });
-</script>
+  <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+  <script>
+    // Fail-safe: só inicia quando DOM estiver pronto
+    document.addEventListener('DOMContentLoaded', function () {
+      try {
+        const player = new Plyr('#player', {
+          controls: ['play','progress','current-time','mute','volume','settings','fullscreen'],
+          speed: { selected: 1, options: [0.5,0.75,1,1.25,1.5,1.75,2] },
+          captions: { active: false, update: true, language: 'pt' },
+          youtube: { noCookie: true, modestbranding: 1, rel: 0, iv_load_policy: 3, playsinline: 1, hl:'pt-BR' },
+          quality: { enabled: false } // YouTube não expõe seletor de qualidade via Plyr
+        });
+        // Log opcional (não aparece para o aluno)
+        console.log('Plyr carregado', player);
+      } catch (e) {
+        console.error('Erro iniciando Plyr', e);
+        // Fallback: iframe YouTube puro (garante que aparece algo)
+        document.querySelector('.player').innerHTML =
+          '<iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/DiPIPaFY4A0?modestbranding=1&rel=0&iv_load_policy=3" title="YouTube video player" frameborder="0" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+      }
+    });
+  </script>
+</body>
+</html>
