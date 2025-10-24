@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
   <style>
     html,body{height:100%;margin:0;background:#fff}
-    .wrap{max-width:1000px;margin:0 auto;padding:0 8px}
+    .wrap{max-width:1000px;margin:0 auto;padding:12px}
     .player{aspect-ratio:16/9;border-radius:12px;overflow:hidden;box-shadow:0 8px 25px rgba(0,0,0,.12)}
   </style>
 </head>
@@ -24,12 +24,7 @@
       controls: ['play','progress','current-time','mute','volume','fullscreen'],
       clickToPlay: true,
       keyboard: { global: false },
-      youtube: {
-        noCookie: true,        // usa youtube-nocookie
-        modestbranding: 1,
-        rel: 0,
-        iv_load_policy: 3
-      }
+      youtube: { noCookie: true, modestbranding: 1, rel: 0, iv_load_policy: 3 }
     });
   </script>
 </body>
